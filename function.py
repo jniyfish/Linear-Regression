@@ -42,37 +42,6 @@ def LeaveOneOut(x,y):
 	print("LOO error:	",errorSum)
 
 
-def LinearRegression(x,y):
-
-	testX=np.array([])
-	testY =np.array([])
-	trainX=np.array([])
-	trainY=np.array([])
-	nA = np.array([]) # for normal equtaion
-
-	for i in range(0,20): #spilt data 
-		if i%4==0 :
-			testX = np.append(testX,x[i])
-			testY = np.append(testY,y[i])
-		elif i%4!=0 :
-			trainX = np.append(trainX,x[i])
-			nA = np.append(nA,[x[i],1])
-			trainY = np.append(trainY,y[i])
-
-	trainYe = trainY
-	theta = NormalEquation(nA,trainY,15,2)
-
-	trainError = trainYe - (theta[0]*trainX + theta[1])
-	trainError = np.dot(trainError.T,trainError)/15#error = (y-y')^2 summation
-	print("train Error:	",trainError)
-
-	testError = testY - (theta[0]*testX + theta[1]) # y^ = y-y'
-	testError = np.dot(testError.T,testError) /5        #error = (y-y')^2 summation
-	print("test Error:	",testError)
-#	plt.scatter(testX,testY,s=30,c='blue',marker='o',alpha=0.5,label='test(5)')
-	plt.scatter(trainX,trainY,s=40,c='blue',marker='x',alpha=0.5,label='train(15)')
-	return theta
-
 def Five_Fold(x,y):
 	errorSum = 0
 	for i in range(0,5):
@@ -140,10 +109,12 @@ def PolyReression(x,y,degree):
 	trainError =  np.dot(trainError.T,trainError)/15
 	print('Degree ',degree,' train Error ',trainError)
 	testError = testY - fitTestY
-	testError = np.dot(trainError.T,trainError)/5
+	testError = np.dot(testError.T,testError)/5
 	print('Degree ',degree,'test Error	',testError)
-
-	if degree == 5:
+	print('')
+	if degree == 1:
+		plt.plot(plotX,fitY,color='r',label='1-degree')
+	elif degree == 5:
 		plt.plot(plotX,fitY,color='g',label='5-degree')
 	elif degree ==10:
 		plt.plot(plotX,fitY,color='y',label='10-degree')

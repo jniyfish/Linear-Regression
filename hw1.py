@@ -13,7 +13,7 @@ y=2*x+noise
 
 
 print('partA')
-theta = fun.LinearRegression(x,y)
+fun.PolyReression(x,y,1)
 fun.LeaveOneOut(x,y)
 fun.Five_Fold(x,y)
 print('partB')
@@ -23,10 +23,8 @@ fun.PolyReression(x,y,14)
 
 
 
-myLine = theta[0]*x + theta[1]
 plt.xlabel('x軸',fontsize=8)
 plt.ylabel('y軸',fontsize=8,rotation=0)
-plt.plot(x,myLine,color = 'r',label = 'linear')
 plt.savefig('data_point')
 plt.legend(loc='upper left')
 
