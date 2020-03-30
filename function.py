@@ -14,8 +14,8 @@ def NormalEquation(nA,testY,shape_m,shape_n):  #X:mxn matrix
 	return theta
 
 
-def LeaveOneOut(x,y):
-	nA = np.array([])
+
+def LeaveOneOut(x,y,degree):
 	errorSum = 0
 	for i in range(0,20):
 		testX = np.array([])
@@ -23,79 +23,60 @@ def LeaveOneOut(x,y):
 		testY = np.array([])
 		trainY = np.array([])
 		nA = np.array([])
+		plotX = np.array([])
 		for j in range(0,20):
+			row = np.array([])
 			if j==i:
 				testX = np.append(testX,x[i])
 				testY = np.append(testY,y[i])
 			elif j!=i:
+				for j in range(degree,0,-1):
+					row = np.append(row,math.pow(x[i],j))
+				row = np.append(row,1)
+				plotX = np.append(plotX,x[i])
 				trainX = np.append(trainX,x[i])
 				trainY = np.append(trainY,y[i])
-				nA = np.append(nA,[x[i],1])
-
-		trainYe = trainY
-		theta = NormalEquation(nA,trainY,19,2)
-			
-		testError = testY - (theta[0]*testX + theta[1])
-		testError = np.dot(testError.T,testError)/1
-		errorSum = errorSum + testError
+				nA = np.append(nA,row)
+		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,19,1)
+		errorSum = errorSum + result[0]
 	errorSum = errorSum/20
 	print("LOO error:	",errorSum)
 
 
-def Five_Fold(x,y):
+def Five_Fold(x,y,degree):
 	errorSum = 0
 	for i in range(0,5):
 		testX = np.array([])
 		trainX = np.array([])
 		testY = np.array([])
 		trainY = np.array([])
+		plotX=np.array([])
 		nA = np.array([])
 		for j in range(0,20):
+			row = np.array([])
 			if (4*i)+4>j and j >=(4*i) :
 				testX = np.append(testX,x[i])
 				testY = np.append(testY,y[i])
 			else :
+				for j in range(degree,0,-1):
+					row = np.append(row,math.pow(x[i],j))
+				row = np.append(row,1)
+				plotX = np.append(plotX,x[i])
 				trainX = np.append(trainX,x[i])
 				trainY = np.append(trainY,y[i])
-				nA = np.append(nA,[x[i],1])
+				nA = np.append(nA,row)
 
-		theta = NormalEquation(nA,trainY,16,2)
-
-		testError = testY - (theta[0]*testX + theta[1])
-		testError = np.dot(testError.T,testError)/4  #each time has 4 MSE
-		errorSum = errorSum + testError
+		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,16,4)
+		errorSum = errorSum + result[0]
 
 	errorSum = errorSum/5    #five fold
 	print("5_Fold error:	",errorSum)
 
+def Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize):
 
-def PolyReression(x,y,degree):
-
-	testX=np.array([])
-	testY =np.array([])
-	trainX=np.array([])
-	trainY=np.array([])
-	nA = np.array([]) # for normal equtaion
-	plotX = np.array([])
-	for i in range(0,20): #spilt data 
-		row = np.array([])
-		if i%4==0 :
-			for j in range(degree,0,-1):
-				row  = np.append(row,math.pow(x[i],j))
-			row = np.append(row,1)
-			testX = np.append(testX,x[i])
-			testY = np.append(testY,y[i])
-		elif i%4!=0 :
-			for j in range(degree,0,-1):
-				row = np.append(row,math.pow(x[i],j))
-			row = np.append(row,1)
-			nA = np.append(nA,row)
-			plotX = np.append(plotX,x[i])
-			trainY = np.append(trainY,y[i])
-		
-	theta = NormalEquation(nA,trainY,15,degree+1)
-	fitY = np.zeros(15)
-	fitTestY = np.zeros(5)
+	theta = NormalEquation(nA,trainY,trainSize,degree+1)
+	fitY = np.zeros(trainSize)
+	fitTestY = np.zeros(testSize)
 	j = degree
 
 	for i in range(0,degree):
@@ -104,19 +85,40 @@ def PolyReression(x,y,degree):
 		j = j - 1
 	fitY = fitY + theta[degree]
 	fitTestY = fitTestY + theta[degree]
-
 	trainError = trainY - fitY
-	trainError =  np.dot(trainError.T,trainError)/15
-	print('Degree ',degree,' train Error ',trainError)
+	trainError =  np.dot(trainError.T,trainError)/trainSize
 	testError = testY - fitTestY
-	testError = np.dot(testError.T,testError)/5
-	print('Degree ',degree,'test Error	',testError)
-	print('')
+	testError = np.dot(testError.T,testError)/testSize
+	
+	return testError,trainError,plotX,fitY
+def linearRegression(x,y,degree):
+	
+	testX=np.array([])
+	testY =np.array([])
+	trainX=np.array([])
+	trainY=np.array([])
+	nA = np.array([]) # for normal equtaion
+	plotX = np.array([])
+	for i in range(0,20): #spilt data 
+		row = np.array([])
+		if i%4==2 :
+			testX = np.append(testX,x[i])
+			testY = np.append(testY,y[i])
+		elif i%4!=2 :
+			for j in range(degree,0,-1):
+				row = np.append(row,math.pow(x[i],j))
+			row = np.append(row,1)
+			nA = np.append(nA,row)
+			plotX = np.append(plotX,x[i])
+			trainY = np.append(trainY,y[i])
+	result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,15,5)
+	print('train Error ',result[1])
+	print('test Error	',result[0])
 	if degree == 1:
-		plt.plot(plotX,fitY,color='r',label='1-degree')
+		plt.plot(plotX,result[3],color='r',label='1-degree')
 	elif degree == 5:
-		plt.plot(plotX,fitY,color='g',label='5-degree')
+		plt.plot(plotX,result[3],color='g',label='5-degree')
 	elif degree ==10:
-		plt.plot(plotX,fitY,color='y',label='10-degree')
+		plt.plot(plotX,result[3],color='y',label='10-degree')
 	elif degree ==14:	
-		plt.plot(plotX,fitY,color='pink',label='14-degree')
+		plt.plot(plotX,result[3],color='pink',label='14-degree')
