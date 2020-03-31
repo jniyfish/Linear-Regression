@@ -15,16 +15,18 @@ def NormalEquation(nA,testY,shape_m,shape_n):  #X:mxn matrix
 
 
 
-def LeaveOneOut(x,y,degree):
+def LeaveOneOut(x,y,degree,dataSize):
+	trainSize = dataSize - 1
+	testSize = 1
 	errorSum = 0
-	for i in range(0,20):
+	for i in range(0,dataSize):
 		testX = np.array([])
 		trainX = np.array([])
 		testY = np.array([])
 		trainY = np.array([])
 		nA = np.array([])
 		plotX = np.array([])
-		for j in range(0,20):
+		for j in range(0,dataSize):
 			row = np.array([])
 			if j==i:
 				testX = np.append(testX,x[i])
@@ -37,13 +39,15 @@ def LeaveOneOut(x,y,degree):
 				trainX = np.append(trainX,x[i])
 				trainY = np.append(trainY,y[i])
 				nA = np.append(nA,row)
-		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,19,1)
+		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize)
 		errorSum = errorSum + result[0]
 	errorSum = errorSum/20
 	print("LOO error:	",errorSum)
 
 
-def Five_Fold(x,y,degree):
+def Five_Fold(x,y,degree,dataSize):
+	trainSize = dataSize*4//5
+	testSize = dataSize//5
 	errorSum = 0
 	for i in range(0,5):
 		testX = np.array([])
@@ -52,9 +56,9 @@ def Five_Fold(x,y,degree):
 		trainY = np.array([])
 		plotX=np.array([])
 		nA = np.array([])
-		for j in range(0,20):
+		for j in range(0,dataSize):
 			row = np.array([])
-			if (4*i)+4>j and j >=(4*i) :
+			if (testSize*i)+testSize>j and j >=(testSize*i) :
 				testX = np.append(testX,x[i])
 				testY = np.append(testY,y[i])
 			else :
@@ -66,7 +70,7 @@ def Five_Fold(x,y,degree):
 				trainY = np.append(trainY,y[i])
 				nA = np.append(nA,row)
 
-		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,16,4)
+		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize)
 		errorSum = errorSum + result[0]
 
 	errorSum = errorSum/5    #five fold
@@ -91,15 +95,17 @@ def Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize):
 	testError = np.dot(testError.T,testError)/testSize
 	
 	return testError,trainError,plotX,fitY
-def linearRegression(x,y,degree):
-	
+def linearRegression(x,y,degree,dataSize):
+
+	testSize = dataSize//4
+	trainSize = dataSize*3//4
 	testX=np.array([])
 	testY =np.array([])
 	trainX=np.array([])
 	trainY=np.array([])
 	nA = np.array([]) # for normal equtaion
 	plotX = np.array([])
-	for i in range(0,20): #spilt data 
+	for i in range(0,dataSize): #spilt data 
 		row = np.array([])
 		if i%4==2 :
 			testX = np.append(testX,x[i])
@@ -111,10 +117,12 @@ def linearRegression(x,y,degree):
 			nA = np.append(nA,row)
 			plotX = np.append(plotX,x[i])
 			trainY = np.append(trainY,y[i])
-	result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,15,5)
+	result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize)
 	print('train Error ',result[1])
 	print('test Error	',result[0])
 	if degree == 1:
+		plt.scatter(plotX,trainY,s=40,c='blue',marker='o',alpha=0.5,label='train(15)')
+		plt.scatter(testX,testY,s=40,c='green',marker='x',alpha=0.5,label='test(5)')
 		plt.plot(plotX,result[3],color='r',label='1-degree')
 	elif degree == 5:
 		plt.plot(plotX,result[3],color='g',label='5-degree')
