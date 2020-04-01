@@ -16,31 +16,31 @@ plt.title('dataSize = 20',fontsize=10)
 
 
 print('------degree:1  dataSize:20  result:------')
-fun.linearRegression(x,y,1,20)#(x,y,degree,dataSize)
-fun.LeaveOneOut(x,y,1,20)
-fun.Five_Fold(x,y,1,20)
+fun.linearRegression(x,y,1,20,0)#(x,y,degree,dataSize)
+fun.LeaveOneOut(x,y,1,20,0)
+fun.Five_Fold(x,y,1,20,0)
 
 print('------degree:5 dataSize:20 result:-------')
-fun.linearRegression(x,y,5,20)
-fun.LeaveOneOut(x,y,5,20)
-fun.Five_Fold(x,y,5,20)
+fun.linearRegression(x,y,5,20,0)
+fun.LeaveOneOut(x,y,5,20,0)
+fun.Five_Fold(x,y,5,20,0)
 
 print('------degree:10 dataSize:20  result:------')
-fun.linearRegression(x,y,10,20)
-fun.LeaveOneOut(x,y,10,20)
-fun.Five_Fold(x,y,10,20)
+fun.linearRegression(x,y,10,20,0)
+fun.LeaveOneOut(x,y,10,20,0)
+fun.Five_Fold(x,y,10,20,0)
 
 print('------degree:14 dataSize:20  result:------')
-fun.linearRegression(x,y,14,20)
-fun.LeaveOneOut(x,y,14,20)
-fun.Five_Fold(x,y,14,20)
+fun.linearRegression(x,y,14,20,0)
+fun.LeaveOneOut(x,y,14,20,0)
+fun.Five_Fold(x,y,14,20,0)
 
 plt.xlabel('x軸',fontsize=8)
 plt.ylabel('y軸',fontsize=8,rotation=0)
 plt.legend(loc='best')
 print('')
 print('')
-########c########
+#-----------c----------#
 
 print("------partC model------")
 plt.subplot(3,2,2)
@@ -48,22 +48,23 @@ plt.title('dataSize = 20,sin function',fontsize='10')
 
 np.random.seed(500)
 noise2=np.random.normal(0,0.4,20)
-sinX = np.linspace(3,-3,20)#
+sinX = np.linspace(0,1,20)#
 sinY = np.sin(sinX * math.pi*2)
 sinYn = np.sin(sinX*math.pi*2) + noise2
 
-plt.plot(sinX,sinY,color='r',label="fff") #origin
-plt.plot(sinX,sinYn,color='blue',label="fff")#noise function
+#plt.plot(sinX,sinY,color='r',label="fff") #origin
+#plt.plot(sinX,sinYn,color='blue',label="")#noise function
 
 print("degree:1 dataSize:20")
-fun.linearRegression(sinX,sinY,1,20)
+fun.linearRegression(sinX,sinYn,1,20,0)
 print("degree:5 dataSize:20")
-fun.linearRegression(sinX,sinY,5,20)
+fun.linearRegression(sinX,sinYn,5,20,0)
 print("degree:10 dataSize:20")
-fun.linearRegression(sinX,sinY,10,20)
+fun.linearRegression(sinX,sinYn,10,20,0)
 print("degree:14 dataSize:20")
-fun.linearRegression(sinX,sinY,14,20)
+fun.linearRegression(sinX,sinYn,14,20,0)
 
+plt.legend(loc='best')
 
 
 print('')
@@ -78,24 +79,24 @@ plt.subplot(3,2,3)
 plt.title('dataSize = 60',fontsize=10)
 
 print('------degree:1 dataSize:60 result:------')
-fun.linearRegression(x,y,1,60)#(x,y,degree,dataSize)
-fun.LeaveOneOut(x,y,1,60)
-fun.Five_Fold(x,y,1,60)
+fun.linearRegression(x,y,1,60,0)#(x,y,degree,dataSize)
+fun.LeaveOneOut(x,y,1,60,0)
+fun.Five_Fold(x,y,1,60,0)
 
 print('------degree:5 dataSize:60 result:------')
-fun.linearRegression(x,y,5,60)
-fun.LeaveOneOut(x,y,5,60)
-fun.Five_Fold(x,y,5,60)
+fun.linearRegression(x,y,5,60,0)
+fun.LeaveOneOut(x,y,5,60,0)
+fun.Five_Fold(x,y,5,60,0)
 
 print('------degree:10 dataSize:60 result:------')
-fun.linearRegression(x,y,10,60)
-fun.LeaveOneOut(x,y,10,60)
-fun.Five_Fold(x,y,10,60)
+fun.linearRegression(x,y,10,60,0)
+fun.LeaveOneOut(x,y,10,60,0)
+fun.Five_Fold(x,y,10,60,0)
 
 print('------degree:14 dataSize:60 result:------')
-fun.linearRegression(x,y,14,60)
-fun.LeaveOneOut(x,y,14,60)
-fun.Five_Fold(x,y,14,60)
+fun.linearRegression(x,y,14,60,0)
+fun.LeaveOneOut(x,y,14,60,0)
+fun.Five_Fold(x,y,14,60,0)
 
 print('')
 print('')
@@ -112,24 +113,24 @@ plt.subplot(3,2,4)
 plt.title('dataSize = 160',fontsize=10)
 
 print('------degree:1 dataSize:160 result:------')
-fun.linearRegression(x,y,1,160)#(x,y,degree,dataSize)
-fun.LeaveOneOut(x,y,1,160)
-fun.Five_Fold(x,y,1,160)
+fun.linearRegression(x,y,1,160,0)#(x,y,degree,dataSize)
+fun.LeaveOneOut(x,y,1,160,0)
+fun.Five_Fold(x,y,1,160,0)
 
 print('------degree:5 dataSize:160 result:------')
-fun.linearRegression(x,y,5,160)
-fun.LeaveOneOut(x,y,5,160)
-fun.Five_Fold(x,y,5,160)
+fun.linearRegression(x,y,5,160,0)
+fun.LeaveOneOut(x,y,5,160,0)
+fun.Five_Fold(x,y,5,160,0)
 
 print('------degree:10 dataSize:160 result:------')
-fun.linearRegression(x,y,10,160)
-fun.LeaveOneOut(x,y,10,160)
-fun.Five_Fold(x,y,10,160)
+fun.linearRegression(x,y,10,160,0)
+fun.LeaveOneOut(x,y,10,160,0)
+fun.Five_Fold(x,y,10,160,0)
 
 print('------degree:14 dataSize:160 result:------')
-fun.linearRegression(x,y,14,160)
-fun.LeaveOneOut(x,y,14,160)
-fun.Five_Fold(x,y,14,160)
+fun.linearRegression(x,y,14,160,0)
+fun.LeaveOneOut(x,y,14,160,0)
+fun.Five_Fold(x,y,14,160,0)
 
 print('')
 print('')
@@ -146,24 +147,24 @@ plt.subplot(3,2,5)
 plt.title('dataSize = 320',fontsize=10)
 
 print('------degree:1 dataSize:320 result:------')
-fun.linearRegression(x,y,1,320)#(x,y,degree,dataSize)
-fun.LeaveOneOut(x,y,1,320)
-fun.Five_Fold(x,y,1,320)
+fun.linearRegression(x,y,1,320,0)#(x,y,degree,dataSize)
+fun.LeaveOneOut(x,y,1,320,0)
+fun.Five_Fold(x,y,1,320,0)
 
 print('------degree:5 dataSize:320 result:------')
-fun.linearRegression(x,y,5,320)
-fun.LeaveOneOut(x,y,5,320)
-fun.Five_Fold(x,y,5,320)
+fun.linearRegression(x,y,5,320,0)
+fun.LeaveOneOut(x,y,5,320,0)
+fun.Five_Fold(x,y,5,320,0)
 
 print('------degree:10 dataSize:320 result:------')
-fun.linearRegression(x,y,10,320)
-fun.LeaveOneOut(x,y,10,320)
-fun.Five_Fold(x,y,10,20)
+fun.linearRegression(x,y,10,320,0)
+fun.LeaveOneOut(x,y,10,320,0)
+fun.Five_Fold(x,y,10,20,0)
 
 print('------degree:14 dataSize:320 result:------')
-fun.linearRegression(x,y,14,320)
-fun.LeaveOneOut(x,y,14,320)
-fun.Five_Fold(x,y,14,320)
+fun.linearRegression(x,y,14,320,0)
+fun.LeaveOneOut(x,y,14,320,0)
+fun.Five_Fold(x,y,14,320,0)
 
 print('')
 print('')
@@ -173,5 +174,44 @@ plt.ylabel('y軸',fontsize=8,rotation=0)
 plt.legend(loc='best')
 
 
+#--------partE-----------
+plt.subplot(3,2,6)
+
+plt.title('dataSize = 20,Regu sin function',fontsize='10')
+
+np.random.seed(500)
+noise2=np.random.normal(0,0.4,20)
+sinX = np.linspace(0,1,20)#
+sinY = np.sin(sinX * math.pi*2)
+sinYn = np.sin(sinX*math.pi*2) + noise2
+
+#plt.plot(sinX,sinYn,color='blue',label="Noise function")#noise function
+
+lamba = 0
+fun.linearRegression(sinX,sinYn,14,20,lamba)
+fun.Five_Fold(sinX,sinYn,14,20,lamba)
+fun.LeaveOneOut(x,y,5,320,0)
+print('')
+
+lamba = 0.001/20
+fun.linearRegression(sinX,sinYn,14,20,lamba)
+fun.Five_Fold(sinX,sinYn,14,20,lamba)
+fun.LeaveOneOut(x,y,5,320,0)
+print('')
+
+lamba = 1/20
+fun.linearRegression(sinX,sinYn,14,20,lamba)
+fun.Five_Fold(sinX,sinYn,14,20,lamba)
+fun.LeaveOneOut(x,y,5,320,0)
+print('')
+
+lamba = 1000/20
+fun.linearRegression(sinX,sinYn,14,20,lamba)
+fun.Five_Fold(sinX,sinYn,14,20,lamba)
+fun.LeaveOneOut(x,y,5,320,0)
+print('')
+
+
+plt.legend(loc=3,fontsize=8,ncol=2)
 plt.savefig('data_point')
 plt.show()

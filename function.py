@@ -3,10 +3,14 @@ import matplotlib.pyplot as plt
 import math
 from random import sample
 
-def NormalEquation(nA,testY,shape_m,shape_n):  #nA = X:mxn matrix
+def NormalEquation(nA,testY,shape_m,shape_n,lamba):  #nA = X:mxn matrix
 	nA = nA.reshape(shape_m,shape_n)
 	testY = testY.reshape(shape_m,1)
-	theta = np.dot(nA.T,nA)
+	if lamba ==0: #(X^T * X) 
+		theta = np.dot(nA.T,nA)
+	elif lamba != 0:  #(x^T*X )minus lamba * I
+		theta = np.dot(nA.T,nA)
+		theta = theta -(lamba * np.identity(shape_n))
 	if np.linalg.det(theta) == 0: #singular
 		theta = np.dot(np.linalg.pinv(theta),np.dot(nA.T,testY)) 
 	elif np.linalg.det(theta) !=0 : #nonsingular
@@ -15,7 +19,7 @@ def NormalEquation(nA,testY,shape_m,shape_n):  #nA = X:mxn matrix
 
 
 
-def LeaveOneOut(x,y,degree,dataSize):
+def LeaveOneOut(x,y,degree,dataSize,lamba):
 	trainSize = dataSize - 1
 	testSize = 1   #only one test
 	errorSum = 0
@@ -39,13 +43,13 @@ def LeaveOneOut(x,y,degree,dataSize):
 				trainX = np.append(trainX,x[i])
 				trainY = np.append(trainY,y[i])
 				nA = np.append(nA,row)
-		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize)
+		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize,lamba)
 		errorSum = errorSum + result[0]
 	errorSum = errorSum/20
 	print("LOO error:	",errorSum)
 
 
-def Five_Fold(x,y,degree,dataSize):
+def Five_Fold(x,y,degree,dataSize,lamba):
 	trainSize = dataSize*4//5  #each time use 4/5 for train 
 	testSize = dataSize//5     # 1/5 for test
 	errorSum = 0
@@ -70,15 +74,15 @@ def Five_Fold(x,y,degree,dataSize):
 				trainY = np.append(trainY,y[i])
 				nA = np.append(nA,row)
 
-		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize)
+		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize,lamba)
 		errorSum = errorSum + result[0]
 
 	errorSum = errorSum/5    #five fold
 	print("5_Fold error:	",errorSum)
 
-def Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize):
+def Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize,lamba):
 
-	theta = NormalEquation(nA,trainY,trainSize,degree+1)
+	theta = NormalEquation(nA,trainY,trainSize,degree+1,lamba)
 	fitY = np.zeros(trainSize)
 	fitTestY = np.zeros(testSize)
 	j = degree
@@ -95,7 +99,7 @@ def Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize):
 	testError = np.dot(testError.T,testError)/testSize
 	
 	return testError,trainError,plotX,fitY
-def linearRegression(x,y,degree,dataSize):
+def linearRegression(x,y,degree,dataSize,lamba):
 
 	testSize = dataSize//4
 	trainSize = dataSize*3//4
@@ -118,16 +122,28 @@ def linearRegression(x,y,degree,dataSize):
 			plotX = np.append(plotX,x[i])
 			trainY = np.append(trainY,y[i])
 			
-	result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize)
+	result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize,lamba)
 	print('train Error ',result[1])
 	print('test Error	',result[0])
-	if degree == 1:
-		plt.scatter(plotX,trainY,s=40,c='blue',marker='o',alpha=0.5,label='train')
-		plt.scatter(testX,testY,s=40,c='green',marker='x',alpha=0.5,label='test')
-		plt.plot(plotX,result[3],color='r')
-	elif degree == 5:
-		plt.plot(plotX,result[3],color='g')
-	elif degree ==10:
-		plt.plot(plotX,result[3],color='y')
-	elif degree ==14:	
-		plt.plot(plotX,result[3],color='pink')
+	if lamba == 0:
+		if degree == 1:
+			plt.scatter(plotX,trainY,s=40,c='blue',marker='o',alpha=0.5,label='train')
+			plt.scatter(testX,testY,s=40,c='green',marker='x',alpha=0.5,label='test')
+			plt.plot(plotX,result[3],color='r')
+		elif degree == 5:
+			plt.plot(plotX,result[3],color='g')
+		elif degree ==10:
+			plt.plot(plotX,result[3],color='y')
+		elif degree ==14:	
+			plt.plot(plotX,result[3],color='tomato')
+	elif lamba !=0 :
+		if lamba ==0.001/20:
+			plt.plot(plotX,result[3],color='violet',label="0.0005")
+			plt.scatter(plotX,trainY,s=40,c='blue',marker='o',alpha=0.5,label='train')
+			plt.scatter(testX,testY,s=40,c='green',marker='x',alpha=0.5,label='test')
+		elif lamba ==1/20:
+			plt.plot(plotX,result[3],color='g',label="l=0.05")
+		elif lamba ==1000/20:
+			plt.plot(plotX,result[3],color='navy',label="l=50")
+		
+
