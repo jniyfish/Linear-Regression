@@ -57,12 +57,20 @@ sinYn = np.sin(sinX*math.pi*2) + noise2
 
 print("degree:1 dataSize:20")
 fun.linearRegression(sinX,sinYn,1,20,0)
+fun.Five_Fold(sinX,sinYn,1,20,0)
+fun.LeaveOneOut(sinX,sinYn,1,20,0)
 print("degree:5 dataSize:20")
 fun.linearRegression(sinX,sinYn,5,20,0)
+fun.Five_Fold(sinX,sinYn,5,20,0)
+fun.LeaveOneOut(sinX,sinYn,5,20,0)
 print("degree:10 dataSize:20")
 fun.linearRegression(sinX,sinYn,10,20,0)
+fun.Five_Fold(sinX,sinYn,10,20,0)
+fun.LeaveOneOut(sinX,sinYn,10,20,0)
 print("degree:14 dataSize:20")
 fun.linearRegression(sinX,sinYn,14,20,0)
+fun.Five_Fold(sinX,sinYn,14,20,0)
+fun.LeaveOneOut(sinX,sinYn,14,20,0)
 
 plt.legend(loc='best')
 
@@ -72,9 +80,10 @@ print('')
 
 
 #######d-60######
-x = np.linspace(3,-3,60)
-noise=np.random.normal(0,1,60)
-y=2*x+noise
+x = np.linspace(0,1,60)
+noise=np.random.normal(0,0.4,60)
+y = np.sin(x * math.pi*2) + noise
+
 plt.subplot(3,2,3)
 plt.title('dataSize = 60',fontsize=10)
 
@@ -106,9 +115,9 @@ plt.ylabel('y軸',fontsize=8,rotation=0)
 plt.legend(loc='best')
 
 #######d-160######
-x = np.linspace(3,-3,160)
-noise=np.random.normal(0,1,160)
-y=2*x+noise
+x = np.linspace(0,1,160)
+noise=np.random.normal(0,0.4,160)
+y = np.sin(x * math.pi*2) + noise
 plt.subplot(3,2,4)
 plt.title('dataSize = 160',fontsize=10)
 
@@ -140,9 +149,9 @@ plt.ylabel('y軸',fontsize=8,rotation=0)
 plt.legend(loc='best')
 
 #######d-320######
-x = np.linspace(3,-3,320)
-noise=np.random.normal(0,1,320)
-y=2*x+noise
+x = np.linspace(0,1,320)
+noise=np.random.normal(0,0.4,320)
+y = np.sin(x * math.pi*2) + noise
 plt.subplot(3,2,5)
 plt.title('dataSize = 320',fontsize=10)
 
