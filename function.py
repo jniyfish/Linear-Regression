@@ -45,7 +45,7 @@ def LeaveOneOut(x,y,degree,dataSize,lamba):
 				nA = np.append(nA,row)
 		result = Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize,lamba)
 		errorSum = errorSum + result[0]
-	errorSum = errorSum/20
+	errorSum = errorSum/dataSize
 	print("LOO error:	",errorSum)
 
 

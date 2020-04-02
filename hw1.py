@@ -188,7 +188,7 @@ plt.subplot(3,2,6)
 
 plt.title('dataSize = 20,Regu sin function',fontsize='10')
 
-np.random.seed(499)
+np.random.seed(500)
 noise2=np.random.normal(0,0.4,20)
 sinX = np.linspace(0,1,20)#
 sinY = np.sin(sinX * math.pi*2)
