@@ -94,11 +94,12 @@ def Reression(nA,plotX,testX,testY,trainX,trainY,degree,trainSize,testSize,lamba
 	fitY = fitY + theta[degree]
 	fitTestY = fitTestY + theta[degree]
 	trainError = trainY - fitY  
-	trainError =  np.dot(trainError.T,trainError)/trainSize
-	testError = testY - fitTestY
-	testError = np.dot(testError.T,testError)/testSize
+	trainError =  np.dot(trainError,trainError)/trainSize
+	testError = fitTestY - testY
+	testError = np.dot(testError,testError)/testSize
 	
 	return testError,trainError,plotX,fitY
+
 def linearRegression(x,y,degree,dataSize,lamba):
 
 	testSize = dataSize//4
@@ -143,7 +144,7 @@ def linearRegression(x,y,degree,dataSize,lamba):
 			plt.scatter(testX,testY,s=40,c='green',marker='x',alpha=0.5,label='test')
 		elif lamba ==1/20:
 			plt.plot(plotX,result[3],color='g',label="l=0.05")
-		elif lamba ==1000/20:
+		elif lamba == 50 :
 			plt.plot(plotX,result[3],color='navy',label="l=50")
 		
 

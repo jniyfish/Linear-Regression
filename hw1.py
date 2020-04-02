@@ -188,7 +188,7 @@ plt.subplot(3,2,6)
 
 plt.title('dataSize = 20,Regu sin function',fontsize='10')
 
-np.random.seed(500)
+np.random.seed(499)
 noise2=np.random.normal(0,0.4,20)
 sinX = np.linspace(0,1,20)#
 sinY = np.sin(sinX * math.pi*2)
@@ -199,25 +199,26 @@ sinYn = np.sin(sinX*math.pi*2) + noise2
 lamba = 0
 fun.linearRegression(sinX,sinYn,14,20,lamba)
 fun.Five_Fold(sinX,sinYn,14,20,lamba)
-fun.LeaveOneOut(x,y,5,320,0)
+fun.LeaveOneOut(sinX,sinYn,14,20,lamba)
 print('')
 
 lamba = 0.001/20
 fun.linearRegression(sinX,sinYn,14,20,lamba)
 fun.Five_Fold(sinX,sinYn,14,20,lamba)
-fun.LeaveOneOut(x,y,5,320,0)
+fun.LeaveOneOut(sinX,sinYn,14,20,lamba)
 print('')
 
 lamba = 1/20
 fun.linearRegression(sinX,sinYn,14,20,lamba)
 fun.Five_Fold(sinX,sinYn,14,20,lamba)
-fun.LeaveOneOut(x,y,5,320,0)
+fun.LeaveOneOut(sinX,sinYn,14,20,lamba)
 print('')
 
-lamba = 1000/20
+print("----")
+lamba = 50
 fun.linearRegression(sinX,sinYn,14,20,lamba)
 fun.Five_Fold(sinX,sinYn,14,20,lamba)
-fun.LeaveOneOut(x,y,5,320,0)
+fun.LeaveOneOut(sinX,sinYn,14,20,lamba)
 print('')
 
 
